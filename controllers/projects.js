@@ -1,6 +1,7 @@
-const RegularProjectModel = require("../models/regularProject");
+const RegularProjectModel = require("../models/projects");
 
 const getAllProjects = async (req, res) => {
+  return res.status(200).json('hit')
   try {
     const projects = await RegularProjectModel.find({});
     if (projects.length < 1) {

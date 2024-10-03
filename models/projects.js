@@ -1,18 +1,19 @@
 const mongoose = require("mongoose");
 
-const regularProjectSchema = new mongoose.Schema({
+const ProjectSchema = new mongoose.Schema({
   title: { type: String, required: true },
   description: { type: String, required: true },
   prodLink: { type: String },
-  githubLink: { type: String, required: true, unique:true },
+  githubLink: { type: String, required: true, unique: true },
   technologies: [
     {
       name: { type: String, required: true },
       icon: { type: String, required: true },
     },
   ],
+  featured: { type: Boolean },
 });
 
-const RegularProject = mongoose.model("regularProject", regularProjectSchema);
+const Project = mongoose.model("Project", ProjectSchema);
 
-module.exports = RegularProject;
+module.exports = Project;
