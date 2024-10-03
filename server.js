@@ -32,14 +32,13 @@ app.use(express.json());
 ///////////////////////////
 // Routers
 ///////////////////////////
-const regularRouter = require("./routes/regular");
-const featuredRouter = require("./routes/featured");
+const projectsRouter = require("./routes/projects");
 const certificationRouter = require("./routes/certifications");
 ///////////////////////////
 // Routes
 ///////////////////////////
-app.use("/featured", featuredRouter);
-app.use("/regular", regularRouter);
+
+app.use("/projects", projectsRouter);
 app.use("/certifications", certificationRouter);
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 app.listen(port, () => {
