@@ -1,9 +1,8 @@
-const RegularProjectModel = require("../models/projects");
-
+const ProjectModel = require("../models/projects");
+const projectData = require("../projectData");
 const getAllProjects = async (req, res) => {
-  return res.status(200).json('hit')
   try {
-    const projects = await RegularProjectModel.find({});
+    const projects = await ProjectModel.find({});
     if (projects.length < 1) {
       return res.status(404).json({ error: "Could not find any projects" });
     }
@@ -16,7 +15,7 @@ const getAllProjects = async (req, res) => {
 const getProjectById = async (req, res) => {
   const { id } = req.params;
   try {
-    const project = await RegularProjectModel.findById(id);
+    const project = await ProjectModel.findById(id);
     if (!project)
       return res
         .status(404)
@@ -31,7 +30,7 @@ const getProjectById = async (req, res) => {
 
 const postCreateProject = async (req, res) => {
   try {
-    const newProject = await RegularProjectModel.create(req.body);
+    const newProject = await ProjectModel.create(req.body);
     if (!newProject) {
       return res
         .status(404)
@@ -45,8 +44,34 @@ const postCreateProject = async (req, res) => {
       .json({ error: "Error creating new regular project. Error: ", err });
   }
 };
+
+const addAllProjectsFromDataFile = async (req, res) => {
+  let projects = [];
+  try {
+    projectData.forEach(async (project, idx) => {
+      const newProject = await ProjectModel.create(project);
+      if (!newProject) {
+        console.log(`project of idx ${idx} could not be added to the database`);
+      }
+      projects.push(project);
+    });
+    res
+      .status(200)
+      .json({
+        message: "Added all projects to MongoDB successfully!",
+        projects,
+      });
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ error: `Unable to add projects to MongoDB. Error: ${err}` });
+  }
+};
+
 module.exports = {
   getAllProjects,
   getProjectById,
   postCreateProject,
+  addAllProjectsFromDataFile,
 };

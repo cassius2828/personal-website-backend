@@ -4,23 +4,17 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
-const port = process.env.PORT ? process.env.PORT : "3000";
+const port = process.env.PORT || "3000";
 // checks if we are running in dev or production
 const MONGODB_URI = process.env.MONGODB_URI;
 ///////////////////////////
 // Connect to DB
 ///////////////////////////
-const connectToDB = async () => {
-  try {
-    mongoose.connect(MONGODB_URI);
-    mongoose.connection.on("connected", () => {
-      console.log(`Connected to MongoDB ${mongoose.connection.name}`);
-    });
-  } catch (err) {
-    console.error("Unable to connect to the db", err);
-  }
-};
-connectToDB();
+
+mongoose.connect(MONGODB_URI);
+mongoose.connection.on("connected", () => {
+  console.log(`connected to db ${mongoose.connection.name}`);
+});
 
 ///////////////////////////
 // Middleware
