@@ -78,7 +78,7 @@ module.exports = [
       },
     ],
     featured: true,
-    img: "https://imglocation",
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/Curate-sphere.png`,
   },
   {
     title: "Sommelier Circle",
@@ -113,7 +113,7 @@ module.exports = [
       },
     ],
     featured: true,
-    img: "https://imglocation",
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/Sommelier-circle.png`,
   },
   {
     title: "Lineup Legends",
@@ -139,7 +139,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
       },
     ],
     featured: true,
-    img: "https://imglocation",
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/Lineup-legends.png`,
   },
   // TODO | Get code from gitlab
   {
@@ -211,7 +211,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
       },
     ],
     featured: false,
-    img: null,
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/fast-and-easy-solar.png`,
   },
   // TODO | add later
   // {
@@ -310,7 +310,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
       },
     ],
     featured: false,
-    img: null,
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/Hawk-surf.png`,
   },
   {
     title: "Natours",
@@ -328,7 +328,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
       },
     ],
     featured: false,
-    img: null,
+    img: `https://5-06-sei.s3.us-west-1.amazonaws.com/Natours.png`,
   },
 ];
 

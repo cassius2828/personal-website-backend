@@ -12,6 +12,7 @@ const ProjectSchema = new mongoose.Schema({
     },
   ],
   featured: { type: Boolean },
+  img: { type: String },
 });
 
 const Project = mongoose.model("Project", ProjectSchema);
