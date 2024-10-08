@@ -51,17 +51,17 @@ const getFeaturedProjects = async (req, res) => {
 };
 
 const getProjectById = async (req, res) => {
-  const { id } = req.params;
+  const { projectId } = req.params;
   try {
-    const project = await ProjectModel.findById(id);
+    const project = await ProjectModel.findById(projectId);
     if (!project)
       return res
         .status(404)
-        .json({ error: `Could not find project with an id of ${id}` });
+        .json({ error: `Could not find project with an id of ${projectId}` });
     res.status(200).json(project);
   } catch (err) {
     res.status(500).json({
-      error: `Error trying to get project with an id of ${id}. Error: ${err}`,
+      error: `Error trying to get project with an id of ${projectId}. Error: ${err}`,
     });
   }
 };
@@ -123,6 +123,7 @@ const addImgFields = async (req, res) => {
     res.status(500).json({ error: "Unable to add img field to projects" });
   }
 };
+
 
 module.exports = {
   getAllProjects,
