@@ -27,6 +27,7 @@ app.use(express.json());
 // Routers
 ///////////////////////////
 const projectsRouter = require("./routes/projects");
+const contactRouter = require("./routes/contact");
 const certificationRouter = require("./routes/certifications");
 ///////////////////////////
 // Routes
@@ -34,6 +35,7 @@ const certificationRouter = require("./routes/certifications");
 
 app.use("/projects", projectsRouter);
 app.use("/certifications", certificationRouter);
+app.use("/contact", contactRouter);
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
