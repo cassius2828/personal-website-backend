@@ -193,7 +193,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
   {
     title: "Fast and Easy Solar",
     description:
-      "Landing page for a solar partered business who's goal is to assist buyers in determining which programs they are qualified for and connecting them to the proper businesses and facilitating the transaction. This applicaiton uses emailjs for sending custom email templates to the owner and calendy intergration to manage appointments. There are several sections of the website available to give information to the user. All design aspects were created by me on the request / guidance of the client.",
+      "Landing page for a solar partered business who's goal is to assist buyers in determining which programs they are qualified for and connecting them to the proper businesses and facilitating the transaction. This applicaiton uses emailjs for sending custom email templates to the owner and calendy intergration to manage appointments. There are several sections of the website available to give information to the user.",
     prodLink: "https://fastandeasysolar.netlify.app/",
     githubLink: "https://gitlab.com/cassius.reynolds/fastandeasysolar",
     technologies: [
