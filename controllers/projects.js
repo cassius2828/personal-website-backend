@@ -5,6 +5,7 @@ const featuredProjects = [
   "Curate Sphere",
   "Sommelier Circle",
   "Lineup Legends",
+  "Fast and Easy Solar",
 ];
 
 const getAllProjects = async (req, res) => {
