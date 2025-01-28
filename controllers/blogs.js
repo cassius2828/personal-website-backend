@@ -13,7 +13,7 @@ const getAllBlogs = async (req, res) => {
   try {
     // finds all blogs except for those created by the admin
     let blogs = await BlogModel.find({}).sort({ createdAt: -1 });
-
+console.log(blogs, ' <-- blogs from getAllBlogs')
     if (!blogs) {
       return res
         .status(404)

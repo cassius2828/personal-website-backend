@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
+const session = require("express-session");
+
 const port = process.env.PORT || "3000";
 // checks if we are running in dev or production
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -19,6 +21,14 @@ mongoose.connection.on("connected", () => {
 ///////////////////////////
 // Middleware
 ///////////////////////////
+// Initialize session
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(cors());
 app.use(express.json());
 // app.use(morgan())
