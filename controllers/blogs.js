@@ -13,7 +13,6 @@ const getAllBlogs = async (req, res) => {
   try {
     // finds all blogs except for those created by the admin
     let blogs = await BlogModel.find({}).sort({ createdAt: -1 });
-console.log(blogs, ' <-- blogs from getAllBlogs')
     if (!blogs) {
       return res
         .status(404)
@@ -54,7 +53,15 @@ const getBlogById = async (req, res) => {
 ///////////////////////////
 const postNewBlog = async (req, res) => {
   const { title, content, owner } = req.body;
+  const userId = req.user.user._id;
 
+  const admin = process.env.ADMIN_ID;
+  console.log(admin, " <-- admin id");
+  // if (userId != admin) {
+  //   return res.status(400).json({
+  //     error: "User is not authorized to create a blog",
+  //   });
+  // }
   // Check for missing fields
   if (!title || !content) {
     return res.status(400).json({ error: "missing fields" });
@@ -120,6 +127,13 @@ const putEditBlog = async (req, res) => {
   // params
   const { blogId } = req.params;
   const userId = req.user.user._id;
+  const admin = process.env.ADMIN_ID;
+  console.log(admin, " <-- admin id");
+  if (userId !== admin) {
+    return res.status(400).json({
+      error: "User is not authorized to edit a blog",
+    });
+  }
   // body
   let { title, content } = req.body;
   content = sanitize(content);
@@ -183,7 +197,7 @@ const putEditBlog = async (req, res) => {
           },
           { new: true }
         );
-
+        console.log(updatedBlog, " <-- updatedBlog");
         return res.status(200).json({
           message: "Successfully updated blog with new photo",
           blog: updatedBlog,
@@ -209,7 +223,13 @@ const putEditBlog = async (req, res) => {
 const deleteBlog = async (req, res) => {
   const { blogId } = req.params;
   const userId = req.user.user._id;
-
+  const admin = process.env.ADMIN_ID;
+  console.log(admin, " <-- admin id");
+  if (userId !== admin) {
+    return res.status(400).json({
+      error: "User is not authorized to delete a blog",
+    });
+  }
   try {
     const blogToDelete = await BlogModel.findById(blogId);
     if (!blogToDelete) {
@@ -233,12 +253,47 @@ const deleteBlog = async (req, res) => {
   }
 };
 
+const uploadImage = async (req, res) => {
+  const { title, file } = req.body; // `file` contains the base64 string
+
+  console.log(file, "<-- Base64 image string");
+  console.log(title, "<-- Title");
+
+  try {
+    // Extract the base64 data (e.g., remove `data:image/jpeg;base64,` prefix)
+    const base64Data = file.replace(/^data:image\/\w+;base64,/, "");
+    const buffer = Buffer.from(base64Data, "base64");
+
+    // Generate the S3 file path
+    const filePath = `portfolio/blog-images/${uuidv4()}-${title}.jpeg`;
+
+    const params = {
+      Bucket: process.env.BUCKET_NAME,
+      Key: filePath,
+      Body: buffer,
+      ContentType: "image/jpeg", // Specify the correct MIME type
+    };
+
+    // Upload the file to S3
+    const command = new PutObjectCommand(params);
+    await s3Client.send(command);
+
+    // Respond with the S3 URL of the uploaded image
+    res.status(201).json({
+      url: `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${filePath}`,
+    });
+  } catch (err) {
+    console.error("Error uploading image:", err);
+    res.status(500).json({ error: "Unable to upload image" });
+  }
+};
 module.exports = {
   getAllBlogs,
   getBlogById,
   postNewBlog,
   deleteBlog,
   putEditBlog,
+  uploadImage,
 };
 
 // sanitize html

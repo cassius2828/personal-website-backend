@@ -68,6 +68,14 @@ const getProjectById = async (req, res) => {
 };
 
 const postCreateProject = async (req, res) => {
+  const admin = process.env.ADMIN_ID;
+  const userId = req.user.user._id;
+  console.log(admin, " <-- admin id");
+  if (userId !== admin) {
+    return res.status(400).json({
+      error: "User is not authorized to create a blog",
+    });
+  }
   try {
     const newProject = await ProjectModel.create(req.body);
     if (!newProject) {
