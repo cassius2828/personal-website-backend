@@ -256,9 +256,6 @@ const deleteBlog = async (req, res) => {
 const uploadImage = async (req, res) => {
   const { title, file } = req.body; // `file` contains the base64 string
 
-  console.log(file, "<-- Base64 image string");
-  console.log(title, "<-- Title");
-
   try {
     // Extract the base64 data (e.g., remove `data:image/jpeg;base64,` prefix)
     const base64Data = file.replace(/^data:image\/\w+;base64,/, "");
@@ -271,7 +268,7 @@ const uploadImage = async (req, res) => {
       Bucket: process.env.BUCKET_NAME,
       Key: filePath,
       Body: buffer,
-      ContentType: "image/jpeg", // Specify the correct MIME type
+      ContentType: "image/jpeg",
     };
 
     // Upload the file to S3
