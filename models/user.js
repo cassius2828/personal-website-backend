@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  twoFactorSecret: {
+    type: String,
+  },
 });
 
 userSchema.set("toObject", {
@@ -20,16 +23,6 @@ userSchema.set("toObject", {
     delete ret.password; // deletes the password
     return ret; // then just returns the document
   },
-});
-
-// Pre-save middleware to set displayedName to username if not provided
-userSchema.pre("save", async function (next) {
-
-//   // Hash password if it's new or modified
-//   if (this.isModified("password")) {
-//     this.password = bcrypt.hashSync(this.password, 10);
-//   }
-//   next();
 });
 
 module.exports = mongoose.model("User", userSchema);
