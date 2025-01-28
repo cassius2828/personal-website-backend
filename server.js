@@ -26,15 +26,19 @@ app.use(express.json());
 ///////////////////////////
 // Routers
 ///////////////////////////
+const authRouter = require("./routes/auth");
 const projectsRouter = require("./routes/projects");
 const contactRouter = require("./routes/contact");
+const blogsRouter = require("./routes/blogs");
 const certificationRouter = require("./routes/certifications");
 ///////////////////////////
 // Routes
 ///////////////////////////
 
+app.use("/auth", authRouter);
 app.use("/projects", projectsRouter);
 app.use("/certifications", certificationRouter);
+app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 app.listen(port, () => {
