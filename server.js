@@ -4,6 +4,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
+const session = require("express-session");
+
 const port = process.env.PORT || "3000";
 // checks if we are running in dev or production
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -19,6 +21,14 @@ mongoose.connection.on("connected", () => {
 ///////////////////////////
 // Middleware
 ///////////////////////////
+// Initialize session
+app.use(
+  session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 app.use(cors());
 app.use(express.json());
 // app.use(morgan())
@@ -26,15 +36,19 @@ app.use(express.json());
 ///////////////////////////
 // Routers
 ///////////////////////////
+const authRouter = require("./routes/auth");
 const projectsRouter = require("./routes/projects");
 const contactRouter = require("./routes/contact");
+const blogsRouter = require("./routes/blogs");
 const certificationRouter = require("./routes/certifications");
 ///////////////////////////
 // Routes
 ///////////////////////////
 
+app.use("/auth", authRouter);
 app.use("/projects", projectsRouter);
 app.use("/certifications", certificationRouter);
+app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
 // console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
 app.listen(port, () => {
