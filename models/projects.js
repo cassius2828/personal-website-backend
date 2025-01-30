@@ -13,6 +13,7 @@ const ProjectSchema = new mongoose.Schema({
   ],
   featured: { type: Boolean },
   img: { type: String },
+  priorityLevel: { type: Number, required: true, default: 1 },
 });
 
 const Project = mongoose.model("Project", ProjectSchema);

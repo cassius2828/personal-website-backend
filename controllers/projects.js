@@ -24,7 +24,8 @@ const getRegularProjects = async (req, res) => {
   try {
     const projects = await ProjectModel.find({
       title: { $nin: featuredProjects },
-    });
+    }).sort({ priorityLevel: -1 });
+
     if (projects.length < 1) {
       return res.status(404).json({ error: "Could not find any projects" });
     }
@@ -39,7 +40,7 @@ const getFeaturedProjects = async (req, res) => {
     const projects = await ProjectModel.find({
       title: { $in: featuredProjects },
     });
-   
+
     if (projects.length < 3) {
       return res
         .status(404)
@@ -69,7 +70,7 @@ const getProjectById = async (req, res) => {
 
 const postCreateProject = async (req, res) => {
   const admin = process.env.ADMIN_ID;
-  console.log(req.user)
+  console.log(req.user);
   const userId = req.user.user._id;
   if (userId !== admin) {
     return res.status(400).json({
@@ -114,26 +115,6 @@ const addAllProjectsFromDataFile = async (req, res) => {
   }
 };
 
-const addImgFields = async (req, res) => {
-  try {
-    const projects = await ProjectModel.find({});
-    if (!projects)
-      return res.status(400).json({ error: "No projects were found" });
-    projects.forEach(async (project) => {
-      project.img = '';
-      await project.save();
-    });
-
-    res
-      .status(200)
-      .json({ message: "Added img field to all projects", projects });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Unable to add img field to projects" });
-  }
-};
-
-
 module.exports = {
   getAllProjects,
   getProjectById,
@@ -141,5 +122,4 @@ module.exports = {
   addAllProjectsFromDataFile,
   getFeaturedProjects,
   getRegularProjects,
-  addImgFields,
 };
