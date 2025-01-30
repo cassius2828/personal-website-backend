@@ -56,7 +56,7 @@ const postNewBlog = async (req, res) => {
   const userId = req.user.user._id;
 
   const admin = process.env.ADMIN_ID;
-  console.log(admin, " <-- admin id");
+
   // if (userId != admin) {
   //   return res.status(400).json({
   //     error: "User is not authorized to create a blog",
@@ -128,7 +128,6 @@ const putEditBlog = async (req, res) => {
   const { blogId } = req.params;
   const userId = req.user.user._id;
   const admin = process.env.ADMIN_ID;
-  console.log(admin, " <-- admin id");
   if (userId !== admin) {
     return res.status(400).json({
       error: "User is not authorized to edit a blog",
@@ -197,7 +196,6 @@ const putEditBlog = async (req, res) => {
           },
           { new: true }
         );
-        console.log(updatedBlog, " <-- updatedBlog");
         return res.status(200).json({
           message: "Successfully updated blog with new photo",
           blog: updatedBlog,
