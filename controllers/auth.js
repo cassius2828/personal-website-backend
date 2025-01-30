@@ -13,7 +13,6 @@ const enable2FA = async (req, res) => {
 
     // Save the secret (base32) in your database for the user
     const userId = req.user.user._id;
-    console.log(req.user.user._id, " <-- req.user._id");
     if (!userId) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -66,7 +65,6 @@ const verify2FA = async (req, res) => {
 
 async function register(req, res) {
   let { username, password, email } = req.body;
-  console.log(req.body);
   try {
     // Check if the username or email already exists
     const foundByUsername = await UserModel.findOne({ username });
@@ -104,10 +102,7 @@ const changePassTemp = async (req, res) => {
   const { username, password } = req.body;
   try {
     const user = await UserModel.findOne({ username });
-    console.log(user.password, " <-- user password in DB");
-    console.log(password, " <-- new password");
     user.password = bcrypt.hashSync(password, 10);
-    console.log(user.password, " <-- new password hashed");
     await user.save();
     res.status(200).json({ message: "Password changed successfully" });
   } catch (err) {
