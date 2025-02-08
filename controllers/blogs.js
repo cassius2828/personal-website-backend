@@ -91,7 +91,7 @@ const postNewBlog = async (req, res) => {
         owner,
         title,
         content: sanitizedContent,
-        img: `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${filePath}`,
+        img: `${process.env.CLOUDFRONT_PATH}/${filePath}`,
       });
       res.status(200).json({
         message: "Successfully created new blog | Image received",
@@ -192,7 +192,7 @@ const putEditBlog = async (req, res) => {
           {
             title,
             content,
-            img: `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${filePath}`,
+            img: `${process.env.CLOUDFRONT_PATH}/${filePath}`,
           },
           { new: true }
         );
@@ -275,7 +275,7 @@ const uploadImage = async (req, res) => {
 
     // Respond with the S3 URL of the uploaded image
     res.status(201).json({
-      url: `https://${params.Bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${filePath}`,
+      url: `${process.env.CLOUDFRONT_PATH}/${filePath}`,
     });
   } catch (err) {
     console.error("Error uploading image:", err);
