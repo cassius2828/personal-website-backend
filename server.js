@@ -50,7 +50,7 @@ app.use("/projects", projectsRouter);
 app.use("/certifications", certificationRouter);
 app.use("/blogs", blogsRouter);
 app.use("/contact", contactRouter);
-// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
+
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

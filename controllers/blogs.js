@@ -53,15 +53,8 @@ const getBlogById = async (req, res) => {
 ///////////////////////////
 const postNewBlog = async (req, res) => {
   const { title, content, owner } = req.body;
-  const userId = req.user.user._id;
 
-  const admin = process.env.ADMIN_ID;
 
-  // if (userId != admin) {
-  //   return res.status(400).json({
-  //     error: "User is not authorized to create a blog",
-  //   });
-  // }
   // Check for missing fields
   if (!title || !content) {
     return res.status(400).json({ error: "missing fields" });
@@ -129,7 +122,7 @@ const putEditBlog = async (req, res) => {
   const userId = req.user.user._id;
   const admin = process.env.ADMIN_ID;
   if (userId !== admin) {
-    return res.status(400).json({
+    return res.status(403).json({
       error: "User is not authorized to edit a blog",
     });
   }
@@ -142,6 +135,7 @@ const putEditBlog = async (req, res) => {
   try {
     // find the blog to update
     const blogToUpdate = await BlogModel.findById(blogId);
+
     if (!blogToUpdate) {
       return res.status(404).json({ error: "Cannot find blog to update" });
     }
@@ -155,6 +149,7 @@ const putEditBlog = async (req, res) => {
     // check to see if the photo will be upgraded or not
     if (!file) {
       try {
+     
         // if there is no file, then update the title and content then return the doc
         const updatedBlog = await BlogModel.findByIdAndUpdate(
           blogId,
@@ -186,6 +181,7 @@ const putEditBlog = async (req, res) => {
 
         // Upload the file to S3
         const data = await s3Client.send(command);
+        console.log(content, ' <-- content')
 
         const updatedBlog = await BlogModel.findByIdAndUpdate(
           blogId,
@@ -222,7 +218,7 @@ const deleteBlog = async (req, res) => {
   const { blogId } = req.params;
   const userId = req.user.user._id;
   const admin = process.env.ADMIN_ID;
-  console.log(admin, " <-- admin id");
+
   if (userId !== admin) {
     return res.status(400).json({
       error: "User is not authorized to delete a blog",
