@@ -14,7 +14,13 @@ router.post(
   blogRouter.uploadImage
 );
 router.get("/:blogId", blogRouter.getBlogById);
-router.put("/:blogId", verifyToken, blogRouter.putEditBlog);
+
+router.put(
+  "/:blogId",
+  verifyToken,
+  upload.single("img"),
+  blogRouter.putEditBlog
+);
 router.delete("/:blogId", verifyToken, blogRouter.deleteBlog);
 
 module.exports = router;

@@ -36,7 +36,7 @@ const enable2FA = async (req, res) => {
 };
 
 const verify2FA = async (req, res) => {
-  console.log("test verify");
+
   try {
     const { token, userId } = req.body; // The 6-digit code from the user's authenticator app
 
@@ -117,16 +117,15 @@ async function login(req, res) {
   try {
     // Find the user by username
     const user = await UserModel.findOne({ username });
-    console.log(bcrypt.compareSync(password, user.password));
+
     // Check if user exists and if the password is correct
     if (user && bcrypt.compareSync(password, user.password)) {
       // Generate a JWT token with the user data
-      console.log("passed the bcrypt compare");
+
       if (user.twoFactorSecret) {
         return res.status(200).json({ twoFactorFA: true, userId: user._id });
       } else {
-        // return token if no 2FA
-        console.log("sending token");
+ 
         const token = jwt.sign({ user }, process.env.JWT_SECRET);
         return res.status(200).json({ token });
       }

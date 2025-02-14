@@ -70,7 +70,7 @@ const getProjectById = async (req, res) => {
 
 const postCreateProject = async (req, res) => {
   const admin = process.env.ADMIN_ID;
-  console.log(req.user);
+
   const userId = req.user.user._id;
   if (userId !== admin) {
     return res.status(400).json({
