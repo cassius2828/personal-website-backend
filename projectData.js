@@ -191,7 +191,7 @@ Lineup Legends is an engaging fantasy basketball platform that allows users to c
   },
   // TODO | Get code from gitlab
   {
-    title: "Fast and Easy Solar",
+    title: "Apex Solar Solution",
     description:
       "Landing page for a solar partered business who's goal is to assist buyers in determining which programs they are qualified for and connecting them to the proper businesses and facilitating the transaction. This applicaiton uses emailjs for sending custom email templates to the owner and calendy intergration to manage appointments. There are several sections of the website available to give information to the user.",
     prodLink: "https://fastandeasysolar.netlify.app/",
