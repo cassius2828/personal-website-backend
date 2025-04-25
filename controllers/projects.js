@@ -2,6 +2,7 @@ const ProjectModel = require("../models/projects");
 const projectData = require("../projectData");
 
 const featuredProjects = [
+  "LibrisList",
   "Curate Sphere",
   "Sommelier Circle",
   "Lineup Legends",
@@ -40,7 +41,7 @@ const getFeaturedProjects = async (req, res) => {
   try {
     const projects = await ProjectModel.find({
       title: { $in: featuredProjects },
-    });
+    }).sort({ priorityLevel: -1 });
 
     if (projects.length < 3) {
       return res
